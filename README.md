@@ -68,57 +68,43 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Step 1: Create a blank image
-img = np.zeros((300, 500), dtype=np.uint8)
+# Read image in grayscale
+image = cv2.imread("mukesh.jpeg", 0)
 
-# Step 2: Draw white foreground objects
-cv2.rectangle(img, (100, 70), (300, 220), 255, -1)
+if image is None:
+    print("Image not found!")
+else:
+    plt.imshow(image, cmap='gray')
+    plt.title("Original Image")
+    plt.axis("off")
+    plt.show()
 
-# Add small foreground noise
-cv2.circle(img, (50, 50), 3, 255, -1)
-cv2.circle(img, (350, 100), 3, 255, -1)
-cv2.circle(img, (400, 200), 3, 255, -1)
 
-# Add small holes inside the object
-cv2.circle(img, (150, 120), 5, 0, -1)
-cv2.circle(img, (250, 170), 5, 0, -1)
-
-# Step 3: Display original image
-plt.figure(figsize=(6, 4))
-plt.imshow(img, cmap='gray')
-plt.title('Original Image')
-plt.axis('off')
-plt.show()
-
-# Step 4: Create structuring element
+# Create structuring element
 kernel = np.ones((5, 5), np.uint8)
 
-# Step 5: Perform Opening
-opening = cv2.morphologyEx(img, cv2.MORPH_OPEN, kernel)
+# Perform Opening
+opening = cv2.morphologyEx(image, cv2.MORPH_OPEN, kernel)
 
-# Step 6: Perform Closing
-closing = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel)
-
-# Step 7: Display results
-plt.figure(figsize=(12, 4))
-
-plt.subplot(1, 3, 1)
-plt.imshow(img, cmap='gray')
-plt.title('Original Image')
-plt.axis('off')
-
-plt.subplot(1, 3, 2)
+# Display output
 plt.imshow(opening, cmap='gray')
-plt.title('Opening Operation')
-plt.axis('off')
-
-plt.subplot(1, 3, 3)
-plt.imshow(closing, cmap='gray')
-plt.title('Closing Operation')
-plt.axis('off')
-
-plt.tight_layout()
+plt.title("Opening Image")
+plt.axis("off")
 plt.show()
+
+
+# Create structuring element
+kernel = np.ones((5, 5), np.uint8)
+
+# Perform Closing
+closing = cv2.morphologyEx(image, cv2.MORPH_CLOSE, kernel)
+
+# Display output
+plt.imshow(closing, cmap='gray')
+plt.title("Closing Image")
+plt.axis("off")
+plt.show()
+
 
 ```
 
